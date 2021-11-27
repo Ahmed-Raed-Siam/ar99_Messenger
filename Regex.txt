@@ -1,0 +1,8 @@
+'\b(assets\/).+(\/.+?js)\b?'
+"\b(assets\/).+(\/.+?jpg)\b?"
+"\b(assets\/)(.+\/.+)(\/.+jpg)\b?"
+// Condition
+"\b(assets\/)(.+\/)(avatars?.+?)(\/.+jpg)\b?"
+"{{ asset('$1js$2') }}"
+assets/img/avatars/5.jpg
+"{{ asset('assets/img/avatars/5.jpg') }}"
