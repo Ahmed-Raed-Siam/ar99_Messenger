@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MessengerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('messenger');
+//Route::get('/{$id?}', function () {
+////    return view('welcome');
+//})->middleware(['auth']);
+
+Route::middleware(['auth'])->group(function () {
+//    Route::view('home', 'home')->name('home');
+    Route::get('/', [MessengerController::class, 'index'])->name('messenger');
+    Route::get('conversations/{id}', [MessengerController::class, 'index'])->name('messenger.chat');
+    Route::get('conversations/{conversation}', [MessengerController::class, 'index'])->name('messenger.new.chat');
 });
+
+//Route::get('/dashboard', function () {
+//    return view('dashboard');
+//})->middleware(['auth'])->name('dashboard');
+//
+require __DIR__.'/auth.php';

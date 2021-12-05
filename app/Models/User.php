@@ -22,6 +22,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'avatar_url',
         'password',
     ];
 
@@ -49,7 +50,20 @@ class User extends Authenticatable
      */
     public function conversations(): BelongsToMany
     {
-        return $this->belongsToMany(Conversation::class, 'conversations')
+        // Realted model
+        // Pivot table
+        // F.K. for current model in pivot table
+        // F.K. for related model in pivot table
+        // current model key (p.k.)
+        // related model key (p.k. realted model
+        return $this->belongsToMany(
+            Conversation::class,
+            'participants',
+            'user_id',
+            'conversation_id',
+            'id',
+            'id',
+        )
             ->latest('last_message_id')
             ->withPivot([
                 'role', 'joined_at'

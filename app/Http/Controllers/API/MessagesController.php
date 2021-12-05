@@ -22,13 +22,17 @@ class MessagesController extends Controller
      * Display a listing of the resource.
      *
      * @param int $id
-     * @return Response
+     * @return JsonResponse|Response
      */
-    public function index(int $id): Response
+    public function index(int $id)
     {
         $user = Auth::guard('sanctum')->user();
         $conversation = $user->conversations()->findOrfail($id);
-        return $conversation->messages()->paginate();
+
+        return Response::json([
+            'messages' => $conversation->messages()->paginate(),
+        ], 200);
+//        return $conversation->messages()->paginate();
     }
 
     /**

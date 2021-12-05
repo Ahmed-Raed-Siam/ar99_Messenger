@@ -40,7 +40,8 @@ class Conversation extends Model
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class, 'conversation_id')
-            ->latest();
+//            ->latest()
+            ;
     }
 
     /**
