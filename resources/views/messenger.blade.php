@@ -18,9 +18,9 @@
     <link href="{{ asset('assets/css/css2.css') }}" rel="stylesheet">
 
     <!-- Template CSS -->
-    //Light
+    <!-- Light Mode -->
     <link rel="stylesheet" href="{{ asset('assets/css/template.bundle.css') }}">
-    //Dark
+    <!-- Dark Mode -->
     {{--    <link rel="stylesheet" href="{{ asset('assets/css/template.dark.bundle.css') }}">--}}
     <link rel="stylesheet" href="{{ asset('assets/css/template.dark.bundle.css') }}"
           media="(prefers-color-scheme: dark)">
@@ -164,14 +164,26 @@
             <li class="nav-item">
                 <a href="#" class="nav-link p-0 mt-lg-2" data-bs-toggle="modal" data-bs-target="#modal-profile">
                     <div class="avatar avatar-online mx-auto d-none d-xl-block">
-                        <img class="avatar-img"
-                             src="{{ asset('uploads'.'/'.\Illuminate\Support\Facades\Auth::user()->avatar_url) }}"
-                             alt="">
+                        @if(\Illuminate\Support\Facades\Auth::user()->avatar_url==null)
+                            <span class="avatar-text avatar-lg">
+                                {{ ucfirst(substr(\Illuminate\Support\Facades\Auth::user()->name,0,1)) }}
+                            </span>
+                        @else
+                            <img class="avatar-img"
+                                 src="{{ asset('uploads'.'/'.\Illuminate\Support\Facades\Auth::user()->avatar_url) }}"
+                                 alt="">
+                        @endif
                     </div>
                     <div class="avatar avatar-online avatar-xs d-xl-none">
-                        <img class="avatar-img"
-                             src="{{ asset('uploads'.'/'.\Illuminate\Support\Facades\Auth::user()->avatar_url) }}"
-                             alt="">
+                        @if(\Illuminate\Support\Facades\Auth::user()->avatar_url==null)
+                            <span class="avatar-text avatar-lg">
+                                {{ ucfirst(substr(\Illuminate\Support\Facades\Auth::user()->name,0,1)) }}
+                            </span>
+                        @else
+                            <img class="avatar-img"
+                                 src="{{ asset('uploads'.'/'.\Illuminate\Support\Facades\Auth::user()->avatar_url) }}"
+                                 alt="">
+                        @endif
                     </div>
                 </a>
             </li>
@@ -770,18 +782,20 @@
                                             <div class="row align-items-center gx-5">
                                                 <div class="col-auto">
                                                     <a href="{{ route('messenger',$friend->id) }}" class="avatar ">
-
-                                                        {{--<img class="avatar-img"--}}
-                                                        {{--src="{{ asset('assets/img/avatars/6.jpg') }}" alt="">--}}
-                                                        <img class="avatar-img"
-                                                             src="{{ asset('assets/img' . '/' . $friend->avatar_url) }}"
-                                                             alt="">
-
+                                                        @if($friend->avatar_url===null)
+                                                            <span class="avatar-text avatar-lg">
+                                                                {{ ucfirst($letter) }}
+                                                            </span>
+                                                        @else
+                                                            <img class="avatar-img"
+                                                                 src="{{ asset('uploads' . '/' . $friend->avatar_url) }}"
+                                                                 alt="">
+                                                        @endif
                                                     </a>
                                                 </div>
 
                                                 <div class="col">
-                                                    <h5><a href="#">{{ $friend->name }} AAA</a></h5>
+                                                    <h5><a href="#">{{ $friend->name }}</a></h5>
                                                     <p>{{ $friend->last_seen_at }}</p>
                                                 </div>
 
@@ -1121,8 +1135,16 @@
                                             <div class="row gx-5">
                                                 <div class="col-auto">
                                                     <div class="avatar avatar-online">
-                                                        <img src="{{ asset('assets/img/avatars/6.jpg') }}" alt="#"
-                                                             class="avatar-img">
+                                                        @if($chat->participants[0]->avatar_url===null)
+                                                            <span class="avatar-text avatar-lg">
+                                                                {{ ucfirst(substr($chat->participants[0]->name,0,1)) }}
+                                                            </span>
+                                                        @else
+                                                            <img
+                                                                src="{{ asset('uploads'.'/'.$chat->participants[0]->avatar_url) }}"
+                                                                alt="#"
+                                                                class="avatar-img">
+                                                        @endif
                                                     </div>
                                                 </div>
 
@@ -1987,10 +2009,16 @@
                                     <div class="row align-items-center gx-5">
                                         <div class="col-auto">
                                             <div class="avatar">
-                                                <img
-                                                    src="{{ asset('uploads'.'/'.\Illuminate\Support\Facades\Auth::user()->avatar_url) }}"
-                                                    alt="#"
-                                                    class="avatar-img">
+                                                @if(\Illuminate\Support\Facades\Auth::user()->avatar_url===null)
+                                                    <span class="avatar-text avatar-lg">
+                                                                {{ ucfirst(substr(\Illuminate\Support\Facades\Auth::user()->name,0,1)) }}
+                                                    </span>
+                                                @else
+                                                    <img
+                                                        src="{{ asset('uploads'.'/'.\Illuminate\Support\Facades\Auth::user()->avatar_url) }}"
+                                                        alt="#"
+                                                        class="avatar-img">
+                                                @endif
 
                                                 <div
                                                     class="badge badge-circle bg-secondary border-outline position-absolute bottom-0 end-0">
@@ -2491,15 +2519,20 @@
                                         <div class="row align-items-center gx-5">
                                             <div class="col-auto">
                                                 <div class="avatar avatar-online d-none d-xl-inline-block">
-                                                    <img class="avatar-img"
-                                                         src="{{ asset('assets/img/avatars/6.jpg') }}" alt="">
-                                                    {{--                                                         src="{{ asset('uploads/avatars' . '/' . $active_chat->participants->first()->avatar_url) }}" alt="">--}}
+                                                    @if($active_chat->participants->first()->avatar_url===null)
+                                                        <span class="avatar-text avatar-lg">
+                                                            {{ ucfirst(substr($active_chat->participants->first()->name,0,1)) }}
+                                                        </span>
+                                                    @else
+                                                        <img class="avatar-img"
+                                                             src="{{ asset('uploads' . '/' . $active_chat->participants->first()->avatar_url) }}
+                                                                 " alt="">
+                                                    @endif
                                                 </div>
                                             </div>
 
                                             <div class="col overflow-hidden">
                                                 <h5 class="text-truncate">{{ $active_chat->participants->first()->name }}</h5>
-                                                {{--                                                <h5 class="text-truncate">{{ dd($active_chat->participants->first()) }}</h5>--}}
                                                 <p class="text-truncate">is typing<span
                                                         class='typing-dots'><span>.</span><span>.</span><span>.</span></span>
                                                 </p>
@@ -2530,16 +2563,28 @@
                                                     <a href="#" class="avatar avatar-sm" data-bs-toggle="modal"
                                                        data-bs-target="#modal-user-profile">
                                                         <!--Sender-->
-                                                        <img class="avatar-img"
-                                                             src="{{ asset('uploads/avatars' . '/' . $active_chat->participants->first()->avatar_url) }}"
-                                                             alt="#">
+                                                        @if($active_chat->participants->first()->avatar_url===null)
+                                                            <span class="avatar-text avatar-lg">
+                                                                {{ ucfirst(substr($active_chat->participants->first()->name,0,1)) }}
+                                                            </span>
+                                                        @else
+                                                            <img class="avatar-img"
+                                                                 src="{{ asset('uploads' . '/' . $active_chat->participants->first()->avatar_url) }}"
+                                                                 alt="#">
+                                                        @endif
                                                     </a>
                                                     <!--Current user-->
                                                     <a href="#" class="avatar avatar-sm" data-bs-toggle="modal"
                                                        data-bs-target="#modal-profile">
-                                                        <img class="avatar-img"
-                                                             src="{{ asset('uploads/avatars'.'/'.Auth::user()->avatar_url) }}"
-                                                             alt=" #">
+                                                        @if(\Illuminate\Support\Facades\Auth::user()->avatar_url===null)
+                                                            <span class="avatar-text avatar-lg">
+                                                                {{ ucfirst(substr(\Illuminate\Support\Facades\Auth::user()->name,0,1)) }}
+                                                            </span>
+                                                        @else
+                                                            <img class="avatar-img"
+                                                                 src="{{ asset('uploads'.'/'.\Illuminate\Support\Facades\Auth::user()->avatar_url) }}"
+                                                                 alt=" #">
+                                                        @endif
                                                     </a>
                                                 </div>
                                             </div>
@@ -2589,7 +2634,7 @@
                                                 </span>
                                             @else
                                                 <img class="avatar-img"
-                                                     src="{{ asset('assets/img' . '/' . $message->user->avatar_url) }}"
+                                                     src="{{ asset('uploads' . '/' . $message->user->avatar_url) }}"
                                                      alt="">
                                             @endif
 
@@ -2782,25 +2827,26 @@
 
             </div>
         </main>
-    @else
-        <main class="main">
-            <div class="container h-100">
 
-                <div class="d-flex flex-column h-100 justify-content-center text-center">
-                    <div class="mb-6">
+    @endif
+    <main class="main">
+        <div class="container h-100">
+
+            <div class="d-flex flex-column h-100 justify-content-center text-center">
+                <div class="mb-6">
                             <span class="icon icon-xl text-muted">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                      stroke-linejoin="round" class="feather feather-message-square"><path
                                         d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                             </span>
-                    </div>
-
-                    <p class="text-muted">Pick a person from left menu, <br> and start your conversation.</p>
                 </div>
 
+                <p class="text-muted">Pick a person from left menu, <br> and start your conversation.</p>
             </div>
-        </main>
+
+        </div>
+    </main>
 @endif
 <!-- Chat -->
 
@@ -2891,7 +2937,16 @@
                 <div class="row gy-6">
                     <div class="col-12">
                         <div class="avatar avatar-xl mx-auto">
-                            <img src="{{ asset('assets/img/avatars/6.jpg') }}" alt="#" class="avatar-img">
+                            @if($active_chat->participants->first()->avatar_url===null)
+                                <span class="avatar-text avatar-lg">
+                                                            {{ ucfirst(substr($active_chat->participants->first()->name,0,1)) }}
+                                                        </span>
+                            @else
+                                <img class="avatar-img"
+                                     src="{{ asset('uploads' . '/' . $active_chat->participants->first()->avatar_url) }}
+                                         " alt="">
+                            @endif
+
 
                             <a href="#"
                                class="badge badge-lg badge-circle bg-primary text-white border-outline position-absolute bottom-0 end-0">
@@ -3886,9 +3941,15 @@
 
                     <div class="profile-body">
                         <div class="avatar avatar-xl">
-                            <img class="avatar-img"
-                                 src="{{ asset('uploads'.'/'.\Illuminate\Support\Facades\Auth::user()->avatar_url) }}"
-                                 alt="#">
+                            @if(\Illuminate\Support\Facades\Auth::user()->avatar_url===null)
+                                <span class="avatar-text avatar-lg">
+                                    {{ ucfirst(substr(\Illuminate\Support\Facades\Auth::user()->name,0,1)) }}
+                                </span>
+                            @else
+                                <img class="avatar-img"
+                                     src="{{ asset('uploads'.'/'.\Illuminate\Support\Facades\Auth::user()->avatar_url) }}"
+                                     alt="#">
+                            @endif
                         </div>
 
                         <h4 class="mb-1">{{ \Illuminate\Support\Facades\Auth::user()->name }}</h4>
