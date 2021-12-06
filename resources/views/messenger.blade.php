@@ -164,26 +164,10 @@
             <li class="nav-item">
                 <a href="#" class="nav-link p-0 mt-lg-2" data-bs-toggle="modal" data-bs-target="#modal-profile">
                     <div class="avatar avatar-online mx-auto d-none d-xl-block">
-                        @if(\Illuminate\Support\Facades\Auth::user()->avatar_url==null)
-                            <span class="avatar-text avatar-lg">
-                                {{ ucfirst(substr(\Illuminate\Support\Facades\Auth::user()->name,0,1)) }}
-                            </span>
-                        @else
-                            <img class="avatar-img"
-                                 src="{{ asset('uploads'.'/'.\Illuminate\Support\Facades\Auth::user()->avatar_url) }}"
-                                 alt="">
-                        @endif
+                        <x-messenger.user-avatar/>
                     </div>
                     <div class="avatar avatar-online avatar-xs d-xl-none">
-                        @if(\Illuminate\Support\Facades\Auth::user()->avatar_url==null)
-                            <span class="avatar-text avatar-lg">
-                                {{ ucfirst(substr(\Illuminate\Support\Facades\Auth::user()->name,0,1)) }}
-                            </span>
-                        @else
-                            <img class="avatar-img"
-                                 src="{{ asset('uploads'.'/'.\Illuminate\Support\Facades\Auth::user()->avatar_url) }}"
-                                 alt="">
-                        @endif
+                        <x-messenger.user-avatar/>
                     </div>
                 </a>
             </li>
@@ -833,12 +817,12 @@
 
                                         </div>
                                     </div>
-                            @endforeach
+                                @endforeach
 
                                 <div class="my-5">
                                     <small class="text-uppercase text-muted">O</small>
                                 </div>
-                            <!-- Card with status -->
+                                <!-- Card with status -->
                                 <div class="card border-0">
                                     <div class="card-body">
 
@@ -940,16 +924,7 @@
                                             <div class="row gx-5">
                                                 <div class="col-auto">
                                                     <div class="avatar avatar-online">
-                                                        @if($chat->participants->first()->avatar_url===null)
-                                                            <span class="avatar-text avatar-lg">
-                                                                {{ ucfirst(substr($chat->participants->first()->name,0,1)) }}
-                                                            </span>
-                                                        @else
-                                                            <img
-                                                                src="{{ asset('uploads'.'/'.$chat->participants->first()->avatar_url) }}"
-                                                                alt="#"
-                                                                class="avatar-img">
-                                                        @endif
+                                                        <x-messenger.participant-avatar :active_chat="$active_chat"/>
                                                     </div>
                                                 </div>
 
@@ -1816,17 +1791,7 @@
                                     <div class="row align-items-center gx-5">
                                         <div class="col-auto">
                                             <div class="avatar">
-                                                @if(\Illuminate\Support\Facades\Auth::user()->avatar_url===null)
-                                                    <span class="avatar-text avatar-lg">
-                                                                {{ ucfirst(substr(\Illuminate\Support\Facades\Auth::user()->name,0,1)) }}
-                                                    </span>
-                                                @else
-                                                    <img
-                                                        src="{{ asset('uploads'.'/'.\Illuminate\Support\Facades\Auth::user()->avatar_url) }}"
-                                                        alt="#"
-                                                        class="avatar-img">
-                                                @endif
-
+                                                <x-messenger.user-avatar/>
                                                 <div
                                                     class="badge badge-circle bg-secondary border-outline position-absolute bottom-0 end-0">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -2326,15 +2291,7 @@
                                         <div class="row align-items-center gx-5">
                                             <div class="col-auto">
                                                 <div class="avatar avatar-online d-none d-xl-inline-block">
-                                                    @if($active_chat->participants->first()->avatar_url===null)
-                                                        <span class="avatar-text avatar-lg">
-                                                            {{ ucfirst(substr($active_chat->participants->first()->name,0,1)) }}
-                                                        </span>
-                                                    @else
-                                                        <img class="avatar-img"
-                                                             src="{{ asset('uploads' . '/' . $active_chat->participants->first()->avatar_url) }}
-                                                                 " alt="">
-                                                    @endif
+                                                    <x-messenger.participant-avatar :active_chat="$active_chat"/>
                                                 </div>
                                             </div>
 
@@ -2370,28 +2327,12 @@
                                                     <a href="#" class="avatar avatar-sm" data-bs-toggle="modal"
                                                        data-bs-target="#modal-user-profile">
                                                         <!--Participant-->
-                                                        @if($active_chat->participants->first()->avatar_url===null)
-                                                            <span class="avatar-text avatar-lg">
-                                                                {{ ucfirst(substr($active_chat->participants->first()->name,0,1)) }}
-                                                            </span>
-                                                        @else
-                                                            <img class="avatar-img"
-                                                                 src="{{ asset('uploads' . '/' . $active_chat->participants->first()->avatar_url) }}"
-                                                                 alt="#">
-                                                        @endif
+                                                        <x-messenger.participant-avatar :active_chat="$active_chat"/>
                                                     </a>
                                                     <!--Sender Current user-->
                                                     <a href="#" class="avatar avatar-sm" data-bs-toggle="modal"
                                                        data-bs-target="#modal-profile">
-                                                        @if(\Illuminate\Support\Facades\Auth::user()->avatar_url===null)
-                                                            <span class="avatar-text avatar-lg">
-                                                                {{ ucfirst(substr(\Illuminate\Support\Facades\Auth::user()->name,0,1)) }}
-                                                            </span>
-                                                        @else
-                                                            <img class="avatar-img"
-                                                                 src="{{ asset('uploads'.'/'.\Illuminate\Support\Facades\Auth::user()->avatar_url) }}"
-                                                                 alt=" #">
-                                                        @endif
+                                                        <x-messenger.user-avatar/>
                                                     </a>
                                                 </div>
                                             </div>
@@ -2721,16 +2662,7 @@
                     <div class="row gy-6">
                         <div class="col-12">
                             <div class="avatar avatar-xl mx-auto">
-                                @if($active_chat->participants->first()->avatar_url===null)
-                                    <span class="avatar-text avatar-lg">
-                                    {{ ucfirst(substr($active_chat->participants->first()->name,0,1)) }}
-                                </span>
-                                @else
-                                    <img class="avatar-img"
-                                         src="{{ asset('uploads' . '/' . $active_chat->participants->first()->avatar_url) }}
-                                             " alt="">
-                                @endif
-
+                                <x-messenger.participant-avatar :active_chat="$active_chat"/>
                                 <a href="#"
                                    class="badge badge-lg badge-circle bg-primary text-white border-outline position-absolute bottom-0 end-0">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -3668,15 +3600,7 @@
 
                             <div class="profile-body">
                                 <div class="avatar avatar-xl">
-                                    @if(\Illuminate\Support\Facades\Auth::user()->avatar_url===null)
-                                        <span class="avatar-text avatar-lg">
-                                    {{ ucfirst(substr(\Illuminate\Support\Facades\Auth::user()->name,0,1)) }}
-                                </span>
-                                    @else
-                                        <img class="avatar-img"
-                                             src="{{ asset('uploads'.'/'.\Illuminate\Support\Facades\Auth::user()->avatar_url) }}"
-                                             alt="#">
-                                    @endif
+                                    <x-messenger.user-avatar/>
                                 </div>
 
                                 <h4 class="mb-1">{{ \Illuminate\Support\Facades\Auth::user()->name }}</h4>
@@ -3843,16 +3767,7 @@
 
                             <div class="profile-body">
                                 <div class="avatar avatar-xl">
-                                    @if($active_chat->participants->first()->avatar_url===null)
-                                        <span class="avatar-text avatar-lg">
-                                    {{ ucfirst(substr($active_chat->participants->first()->name,0,1)) }}
-                                </span>
-                                    @else
-                                        <img class="avatar-img"
-                                             src="{{ asset('uploads'.'/'.$active_chat->participants->first()) }}"
-                                             alt="#">
-                                    @endif
-
+                                    <x-messenger.participant-avatar :active_chat="$active_chat"/>
                                     <a href="#"
                                        class="badge badge-lg badge-circle bg-primary text-white border-outline position-absolute bottom-0 end-0">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
