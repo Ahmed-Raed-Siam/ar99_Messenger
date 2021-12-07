@@ -1,6 +1,9 @@
 /node_modules
 /public/hot
 /public/storage
+/public/uploads/!ahmed raed siam
+/public/uploads/!ahmed siam
+/public/uploads/**
 /storage/*.key
 /vendor
 .env

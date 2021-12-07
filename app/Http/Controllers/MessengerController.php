@@ -37,28 +37,55 @@ class MessengerController extends Controller
 
         $messages = [];
         $active_chat = null;
+        $participant = null;
         if ($id):
             $active_chat = $chats->where('id', '=', $id)->first();
-            $messages = $active_chat->messages()->with('user')->paginate();
+            /*Check if user id has a chats and messages*/
+            if (empty($active_chat) || $active_chat === null):
+                $messages = null;
+                if (count(User::where('id', '=', $id)->get()) > 0):
+                    $participant = User::where('id', '=', $id)->first();
+                endif;
+            else:
+                $messages = $active_chat->messages()->with('user')->paginate();
+            endif;
+/*            dd(
+                $current_user,
+                $current_user_id,
+                //            $friends,
+                '$id',
+                $id,
+                $chats,
+                $active_chat,
+                'Count',
+                empty($active_chat),
+                $participant,
+                empty($participant),
+            //                $active_chat->messages()->get(),
+            );*/
         endif;
 
-/*        $user_with_relations = User::where('id', $current_user_id)
-            ->leftJoin('participants', 'users.id', '=', 'participants.user_id')
-//            ->leftJoin('conversations', 'participants.conversation_id', '=', 'conversations.id')
-            ->select('*')->first();*/
+        /*        $user_with_relations = User::where('id', $current_user_id)
+                    ->leftJoin('participants', 'users.id', '=', 'participants.user_id')
+        //            ->leftJoin('conversations', 'participants.conversation_id', '=', 'conversations.id')
+                    ->select('*')->first();*/
 
-//        dd(
+///*        dd(
 //            $current_user,
 //            $current_user_id,
 ////            $friends,
+//            '$id',
+//            $id,
 //            $chats,
-//        );
+//            $active_chat,
+//        );*/
 
         return response()->view('messenger', [
             'friends' => $friends,
             'chats' => $chats,
             'active_chat' => $active_chat,
             'messages' => $messages,
+            'participant' => $participant,
         ]);
     }
 }

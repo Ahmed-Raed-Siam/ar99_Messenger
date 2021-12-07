@@ -798,8 +798,12 @@
                                                         </a>
 
                                                         <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item" href="{{ 'sdds' }}">New
-                                                                    message</a></li>
+                                                            <li>
+                                                                <a class="dropdown-item"
+                                                                   href="{{ route('messenger.new.chat',['participant'=>$friend->id]) }}">
+                                                                    New message
+                                                                </a>
+                                                            </li>
                                                             <li><a class="dropdown-item" href="#">Edit contact</a>
                                                             </li>
                                                             <li>
@@ -924,7 +928,16 @@
                                             <div class="row gx-5">
                                                 <div class="col-auto">
                                                     <div class="avatar avatar-online">
-                                                        <x-messenger.participant-avatar :active_chat="$active_chat"/>
+                                                        @if($chat->participants->first()->avatar_url===null)
+                                                            <span class="avatar-text avatar-lg">
+                                                                {{ ucfirst(substr($chat->participants->first()->name,0,1)) }}
+                                                            </span>
+                                                        @else
+                                                            <img
+                                                                src="{{ asset('uploads'.'/'.$chat->participants->first()->avatar_url) }}"
+                                                                alt="#"
+                                                                class="avatar-img">
+                                                        @endif
                                                     </div>
                                                 </div>
 
@@ -2262,7 +2275,7 @@
     <!-- Sidebar -->
 
     <!-- Chat -->
-    @if( count($messages)>0 && \Illuminate\Support\Facades\Route::is('messenger.chat') && ($active_chat->count())>0 )
+    @if( !empty($messages) && \Illuminate\Support\Facades\Route::is('messenger.chat') && ($active_chat->count())>0 )
         <main class="main is-visible" data-dropzone-area="">
             <div class="container h-100">
 
@@ -2291,7 +2304,15 @@
                                         <div class="row align-items-center gx-5">
                                             <div class="col-auto">
                                                 <div class="avatar avatar-online d-none d-xl-inline-block">
-                                                    <x-messenger.participant-avatar :active_chat="$active_chat"/>
+                                                    @if($active_chat->participants->first()->avatar_url===null)
+                                                        <span class="avatar-text avatar-lg">
+                                                            {{ ucfirst(substr($active_chat->participants->first()->name,0,1)) }}
+                                                        </span>
+                                                    @else
+                                                        <img class="avatar-img"
+                                                             src="{{ asset('uploads' . '/' . $active_chat->participants->first()->avatar_url) }}
+                                                                 " alt="">
+                                                    @endif
                                                 </div>
                                             </div>
 
@@ -2327,7 +2348,15 @@
                                                     <a href="#" class="avatar avatar-sm" data-bs-toggle="modal"
                                                        data-bs-target="#modal-user-profile">
                                                         <!--Participant-->
-                                                        <x-messenger.participant-avatar :active_chat="$active_chat"/>
+                                                        @if($active_chat->participants->first()->avatar_url===null)
+                                                            <span class="avatar-text avatar-lg">
+                                                                {{ ucfirst(substr($active_chat->participants->first()->name,0,1)) }}
+                                                            </span>
+                                                        @else
+                                                            <img class="avatar-img"
+                                                                 src="{{ asset('uploads' . '/' . $active_chat->participants->first()->avatar_url) }}"
+                                                                 alt="#">
+                                                        @endif
                                                     </a>
                                                     <!--Sender Current user-->
                                                     <a href="#" class="avatar avatar-sm" data-bs-toggle="modal"
@@ -2662,7 +2691,16 @@
                     <div class="row gy-6">
                         <div class="col-12">
                             <div class="avatar avatar-xl mx-auto">
-                                <x-messenger.participant-avatar :active_chat="$active_chat"/>
+                                @if($active_chat->participants->first()->avatar_url===null)
+                                    <span class="avatar-text avatar-lg">
+                                    {{ ucfirst(substr($active_chat->participants->first()->name,0,1)) }}
+                                </span>
+                                @else
+                                    <img class="avatar-img"
+                                         src="{{ asset('uploads' . '/' . $active_chat->participants->first()->avatar_url) }}
+                                             " alt="">
+                                @endif
+
                                 <a href="#"
                                    class="badge badge-lg badge-circle bg-primary text-white border-outline position-absolute bottom-0 end-0">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -3767,7 +3805,16 @@
 
                             <div class="profile-body">
                                 <div class="avatar avatar-xl">
-                                    <x-messenger.participant-avatar :active_chat="$active_chat"/>
+                                    @if($active_chat->participants->first()->avatar_url===null)
+                                        <span class="avatar-text avatar-lg">
+                                            {{ ucfirst(substr($active_chat->participants->first()->name,0,1)) }}
+                                        </span>
+                                    @else
+                                        <img class="avatar-img"
+                                             src="{{ asset('uploads'.'/'.$active_chat->participants->first()) }}"
+                                             alt="#">
+                                    @endif
+
                                     <a href="#"
                                        class="badge badge-lg badge-circle bg-primary text-white border-outline position-absolute bottom-0 end-0">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -3903,6 +3950,9 @@
                 </div>
             </div>
         </div>
+
+    @elseif($participant)
+        <x-messenger.participant-new-message :participant="$participant" :messages="$messages"/>
     @else
         <main class="main">
             <div class="container h-100">
@@ -3921,7 +3971,12 @@
 
             </div>
         </main>
-    @endif
+
+        <h1>
+            {{--        @dd($participant,$messages)--}}
+        </h1>
+        {{--<!--    @if( $participant )--}}
+        @endif-->
 
 </div>
 <!-- Layout -->
@@ -4022,7 +4077,6 @@
                 <!-- Button -->
             </div>
             <!-- Modal: Body -->
-
         </div>
     </div>
 </div>

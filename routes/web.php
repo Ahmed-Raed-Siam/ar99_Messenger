@@ -22,7 +22,7 @@ Route::middleware(['auth'])->group(function () {
 //    Route::view('home', 'home')->name('home');
     Route::get('/', [MessengerController::class, 'index'])->name('messenger');
     Route::get('conversations/{id}', [MessengerController::class, 'index'])->name('messenger.chat');
-    Route::get('conversations/{conversation}', [MessengerController::class, 'index'])->name('messenger.new.chat');
+    Route::get('conversations/{participant}', [MessengerController::class, 'index'])->name('messenger.new.chat');
 });
 
 //Route::get('/dashboard', function () {
