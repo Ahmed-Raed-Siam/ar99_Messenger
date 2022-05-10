@@ -21489,7 +21489,8 @@ hr.offcanvas-divider {
 
 .avatar .avatar-img {
     max-width: 100%;
-    height: auto
+    height: 100%;
+    width: 100%;
 }
 
 .avatar, .avatar .avatar-img, .avatar .avatar-text {
@@ -22308,4 +22309,13 @@ img.zoom-img {
     position: absolute;
     top: 0;
     left: 0
+}
+
+ .chat-body{
+    display: flex;
+    flex-direction: column-reverse;
+}
+.chat-body-inner{
+    display: flex;
+    flex-direction: column-reverse;
 }

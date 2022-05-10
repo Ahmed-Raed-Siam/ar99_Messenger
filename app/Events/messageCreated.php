@@ -11,6 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 
 class messageCreated implements ShouldBroadcast
 {
@@ -33,7 +34,7 @@ class messageCreated implements ShouldBroadcast
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return array|Channel|\Illuminate\Http\JsonResponse
      */
     public function broadcastOn()
     {
@@ -45,6 +46,14 @@ class messageCreated implements ShouldBroadcast
             // Or
 //            ->where('user_id', '<>', $auth_user_sender_id)
             ->first();
+        if ($recipient === null):
+//            die("message :You Can not send message to you self!");
+            die(json_encode([
+                'message' => 'You Can not send message to your self!',
+            ], 200));
+        endif;
+
         return new PresenceChannel('Messenger.' . $recipient->id);
+
     }
 }

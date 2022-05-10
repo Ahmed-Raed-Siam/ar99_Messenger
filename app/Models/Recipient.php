@@ -12,6 +12,7 @@ class Recipient extends Pivot
     use HasFactory, SoftDeletes;
 
     public $timestamps = false;
+    protected $table = "recipients";
 
     protected $casts = [
         'read_at' => 'datetime'

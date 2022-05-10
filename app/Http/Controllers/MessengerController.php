@@ -80,7 +80,17 @@ class MessengerController extends Controller
 //            $active_chat,
 //        );*/
 
-        return response()->view('messenger', [
+        /* OLD */
+//        return response()->view('messenger', [
+//            'friends' => $friends,
+//            'chats' => $chats,
+//            'active_chat' => $active_chat,
+//            'messages' => $messages,
+//            'participant' => $participant,
+//        ]);
+
+        /* NEW */
+        return response()->view('messenger_new_chat', [
             'friends' => $friends,
             'chats' => $chats,
             'active_chat' => $active_chat,

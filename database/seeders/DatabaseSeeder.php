@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'ahmed siam',
                 'email' => 'ahmedraedsiam@gmail.com',
                 'password' => Hash::make('123456789++'),
-                'avatar_url' => 'uploads/ahmed siam/me.jpg',
+                'avatar_url' => 'ahmed siam/me.jpg',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'ahmed raed siam',
                 'email' => 'ahmedraedsiam@hotmail.com',
                 'password' => Hash::make('123/123'),
-                'avatar_url' => 'uploads/ahmed raed siam/me.jpg',
+                'avatar_url' => 'ahmed raed siam/me.jpg',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],

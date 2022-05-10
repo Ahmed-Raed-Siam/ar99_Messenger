@@ -3811,8 +3811,9 @@
                                         </span>
                                     @else
                                         <img class="avatar-img"
-                                             src="{{ asset('uploads'.'/'.$active_chat->participants->first()) }}"
+                                             src="{{ asset('uploads'.'/'.$active_chat->participants->first()->avatar_url) }}"
                                              alt="#">
+{{--                                        {{ $active_chat->participants->first() }}--}}
                                     @endif
 
                                     <a href="#"
@@ -4189,7 +4190,7 @@
 <script src="{{ asset('assets/js/vendor.js') }}"></script>
 <script src="{{ asset('assets/js/template.js') }}"></script>
 <script src="{{ asset('assets/js/jquery-3.6.0.js') }}"></script>
-<script src="{{ asset('js/messenger.js') }}"></script>
+{{--<script src="{{ asset('js/messenger.js') }}"></script>--}}
 {{--<script src="{{ asset('js/app.js') }}"></script>--}}
 <script src="{{ mix('js/app.js') }}"></script>
 </body>

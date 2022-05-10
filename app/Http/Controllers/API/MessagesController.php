@@ -28,9 +28,19 @@ class MessagesController extends Controller
     {
         $user = Auth::guard('sanctum')->user();
         $conversation = $user->conversations()->findOrfail($id);
+        $messages = $conversation->messages()
+            ->with('user')
+            ->latest()
+            ->paginate();
+//        dd(
+//            'conversation',
+//            $conversation,
+//            'messages',
+//            $conversation->messages()->with('user')->get()
+//        );
 
         return Response::json([
-            'messages' => $conversation->messages()->paginate(),
+            'messages' => $messages,
         ], 200);
 //        return $conversation->messages()->paginate();
     }
@@ -119,6 +129,7 @@ class MessagesController extends Controller
 
         return Response::json([
             'alert' => 'You send message to user ' . $user_id,
+            'auth_user' => auth()->user(),
             'message' => $message,
         ], 200);
 

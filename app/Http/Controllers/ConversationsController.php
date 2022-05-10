@@ -20,12 +20,27 @@ class ConversationsController extends Controller
 //            ->leftJoin('conversations', 'participants.conversation_id', '=', 'conversations.id')
 //            ->leftJoin('messages', 'conversations.last_message_id', '=', 'messages.id')
 //            ->select('*')->get();
-        $conversations = $user->conversations()->paginate();
+//        $conversations = $user->conversations()->paginate();
+        $conversations = $user->conversations()->with([
+            'last_message',
+            'participants' => function ($builder) use ($user) {
+                $builder->where('id', '<>', $user->id);
+            },])
+            ->withCount([
+                'recipients as new_messages' => function ($builder) use ($user) {
+                    $builder->where('recipients.user_id', '=', $user->id)
+                        ->whereNull('read_at');
+                }
+            ])->paginate();
+
+        /*Add Auth User to the Conversations Object */
+//        $conversations['auth_user'] = $user;
+
         return response()->json([
-//            $user,
 //            count($user_with_relations),
 //            $user_with_relations,
-            $conversations
+            'auth_user'=>$user,
+            'data' => $conversations,
         ], '200');
     }
 

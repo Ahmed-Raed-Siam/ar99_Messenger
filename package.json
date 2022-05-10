@@ -10,19 +10,21 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "@tailwindcss/forms": "^0.2.1",
-        "alpinejs": "^3.4.2",
-        "autoprefixer": "^10.1.0",
-        "axios": "^0.21",
-        "laravel-mix": "^6.0.6",
-        "lodash": "^4.17.19",
-        "postcss": "^8.2.1",
-        "postcss-import": "^12.0.1",
-        "tailwindcss": "^2.0.2",
-        "vue-loader": "^16.8.3",
+        "@tailwindcss/forms": "^0.5.0",
+        "alpinejs": "^3.10.2",
+        "autoprefixer": "^10.4.5",
+        "axios": "^0.27.2",
+        "laravel-echo": "^1.11.7",
+        "laravel-mix": "^6.0.43",
+        "postcss": "^8.4.13",
+        "postcss-import": "^14.1.0",
+        "pusher-js": "^7.1.0-beta",
+        "tailwindcss": "^3.0.24",
+        "vue-loader": "^17.0.0",
         "vue-router": "^4.0.12"
     },
     "dependencies": {
-        "vue": "^3.2.23"
+        "moment": "^2.29.3",
+        "vue": "^3.2.33"
     }
 }
